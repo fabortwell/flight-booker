@@ -1,0 +1,26 @@
+<%= render 'shared/navbar' %>
+
+<div class="booking-container">
+  <h2>Passenger Information</h2>
+  
+  <%= form_with model: @booking do |f| %>
+    <%= f.hidden_field :flight_id %>
+    
+    <% f.fields_for :passengers do |passenger| %>
+      <div class="passenger-form">
+        <h3>Passenger <%= passenger.index + 1 %></h3>
+        <div class="form-group">
+          <%= passenger.label :name %>
+          <%= passenger.text_field :name, class: 'form-control', required: true %>
+        </div>
+        
+        <div class="form-group">
+          <%= passenger.label :email %>
+          <%= passenger.email_field :email, class: 'form-control', required: true %>
+        </div>
+      </div>
+    <% end %>
+
+    <%= f.submit "Complete Booking", class: 'btn-primary' %>
+  <% end %>
+</div>

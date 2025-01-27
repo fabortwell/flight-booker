@@ -1,0 +1,50 @@
+<%= render 'shared/navbar' %>
+
+<div class="search-container">
+  <%= form_with url: flights_path, method: :get do |f| %>
+    <div class="form-group">
+      <%= f.label :departure_airport_id, "From" %>
+      <%= f.collection_select :departure_airport_id, @airports, :id, :code, { include_blank: true }, class: 'form-control' %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :arrival_airport_id, "To" %>
+      <%= f.collection_select :arrival_airport_id, @airports, :id, :code, { include_blank: true }, class: 'form-control' %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :date, "Date" %>
+      <%= f.select :date, options_for_select(@dates), { include_blank: true }, class: 'form-control' %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :passengers_count, "Passengers" %>
+      <%= f.select :passengers_count, options_for_select(@passenger_options), {}, class: 'form-control' %>
+    </div>
+
+    <%= f.submit "Search", class: 'btn-primary' %>
+  <% end %>
+</div>
+
+<% if @selected_flights %>
+  <div class="flight-results">
+    <%= form_with url: new_booking_path, method: :get do |f| %>
+      <%= f.hidden_field :passengers_count, value: params[:passengers_count] %>
+      
+      <% @selected_flights.each do |flight| %>
+        <div class="flight-card">
+          <%= f.radio_button :flight_id, flight.id, required: true %>
+          <%= f.label "flight_id_#{flight.id}" do %>
+            <div class="flight-info">
+              <span class="time"><%= flight.departure_time.strftime("%H:%M") %></span>
+              <span class="duration"><%= flight.flight_duration %> mins</span>
+              <span class="price">$<%= rand(150..400) %></span>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+
+      <%= f.submit "Select Flight", class: 'btn-primary' %>
+    <% end %>
+  </div>
+<% end %>
