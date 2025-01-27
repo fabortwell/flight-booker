@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  departure_airport: one
+  arrival_airport: one
+  departure_time: 2025-01-27 14:54:57
+  flight_duration: 1
+
+two:
+  departure_airport: two
+  arrival_airport: two
+  departure_time: 2025-01-27 14:54:57
+  flight_duration: 1
